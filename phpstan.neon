@@ -1,0 +1,13 @@
+includes:
+  - vendor/phpstan/phpstan-strict-rules/rules.neon
+  - vendor/phpstan/phpstan-deprecation-rules/rules.neon
+  - vendor/thecodingmachine/phpstan-strict-rules/phpstan-strict-rules.neon
+
+parameters:
+  level: max
+  paths:
+    - src
+  ignoreErrors:
+    - '/^Method Gears\\Aggregate\\UuidAggregateIdentity::fromString\(\) has no return typehint specified\.$/'
+    - '/^Method Gears\\Aggregate\\AbstractAggregateIdentity::isEqualTo\(\) has parameter \$identity with no typehint specified\.$/'
+    - '/^Call to an undefined method object::getValue\(\)\.$/'
