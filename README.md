@@ -35,7 +35,7 @@ require './vendor/autoload.php';
 By extending `Gears\Aggregate\AbstractAggregateIdentity` you can easily create your own aggregate identities
 
 ```php
-use Gears\Identity\AbstractAggregateIdentity;
+use Gears\Aggregate\AbstractAggregateIdentity;
 
 class CustomAggregateIdentity extends AbstractAggregateIdentity
 {
@@ -54,10 +54,10 @@ If you want to expand on aggregate identities head to [gears/identity](https://g
 
 ### Aggregate root
 
-Aggregate roots should implement `Gears\Aggregate\AggregateRoot` interface. You can extend from `Gears\Identity\AbstractAggregateRoot` for simplicity
+Aggregate roots should implement `Gears\Aggregate\AggregateRoot` interface. You can extend from `Gears\Aggregate\AbstractAggregateRoot` for simplicity
 
 ```php
-use Gears\Identity\AbstractAggregateRoot;
+use Gears\Aggregate\AbstractAggregateRoot;
 
 class CustomAggregate extends AbstractAggregateRoot
 {
@@ -70,12 +70,16 @@ class CustomAggregate extends AbstractAggregateRoot
 
 Mind that AbstractAggregateRoot constructor is protected forcing you to create static named constructors methods
 
+#### Entities
+
+Entities can implement `Gears\Aggregate\Entity` interface. You can extend from `Gears\Aggregate\AbstractEntity` for simplicity
+
 #### Events
 
 Aggregate roots can record [gears/event](https://github.com/phpgears/event) as operations are performed
 
 ```php
-use Gears\Identity\AbstractAggregateRoot;
+use Gears\Aggregate\AbstractAggregateRoot;
 
 class CustomAggregate extends AbstractAggregateRoot
 {
