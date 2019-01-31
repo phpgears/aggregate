@@ -27,6 +27,15 @@ class AbstractAggregateIdentityTest extends TestCase
 
         $this->assertSame('thisIsMyId', $stub->getValue());
         $this->assertSame('thisIsMyId', (string) $stub);
+    }
+
+    public function testSerialization(): void
+    {
+        $stub = AbstractAggregateIdentityStub::fromString('thisIsMyId');
+
+        $serialized = 'C:56:"Gears\Aggregate\Tests\Stub\AbstractAggregateIdentityStub":18:{s:10:"thisIsMyId";}';
+        $this->assertSame($serialized, \serialize($stub));
+        $this->assertSame('thisIsMyId', (\unserialize($serialized))->getValue());
         $this->assertSame('"thisIsMyId"', \json_encode($stub));
     }
 

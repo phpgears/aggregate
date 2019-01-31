@@ -8,6 +8,4 @@ parameters:
   paths:
     - src
   ignoreErrors:
-    - '/^Method Gears\\Aggregate\\UuidAggregateIdentity::fromString\(\) has no return typehint specified\.$/'
-    - '/^Method Gears\\Aggregate\\AbstractAggregateIdentity::isEqualTo\(\) has parameter \$identity with no typehint specified\.$/'
     - '/^Call to an undefined method object::getValue\(\)\.$/'

@@ -48,9 +48,15 @@ class CustomAggregateIdentity extends AbstractAggregateIdentity
 }
 ```
 
-Most used aggregate identities are UUID values, for that reason there is already a `Gears\Aggregate\UuidAggregateIdentity` identity ready to be used
+Most widely used aggregate identities are UUID based, for that reason some UUID aggregate identity classes are provided for you to use or extend from
 
-If you want to expand on aggregate identities head to [gears/identity](https://github.com/phpgears/identity)
+* `Gears\Aggregate\UuidAggregateIdentity` Basic plain UUID aggregate identity
+* `Gears\Aggregate\ShortUuidAggregateIdentity` Shortened UUID aggregate identity. Requires [pascaldevink/shortuuid](https://github.com/pascaldevink/shortuuid)
+* `Gears\Aggregate\HashUuidAggregateIdentity` Hashed UUID aggregate identity. Requires [hashids/hashids](https://github.com/ivanakimov/hashids.php)
+
+Both ShortUuidAggregateIdentity and HashUuidAggregateIdentity allows you to recover original UUID
+
+If you want to expand on UUID aggregate identities head to [gears/identity](https://github.com/phpgears/identity)
 
 ### Aggregate root
 

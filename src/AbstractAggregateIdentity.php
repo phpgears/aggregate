@@ -70,6 +70,24 @@ abstract class AbstractAggregateIdentity implements AggregateIdentity
     /**
      * {@inheritdoc}
      */
+    final public function serialize(): string
+    {
+        return \serialize($this->value);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @param mixed $serialized
+     */
+    final public function unserialize($serialized): void
+    {
+        $this->value = \unserialize($serialized, [static::class]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     final public function jsonSerialize(): string
     {
         return $this->value;
