@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace Gears\Aggregate\Tests;
 
 use Gears\Aggregate\Tests\Stub\AbstractAggregateRootStub;
-use Gears\Aggregate\UuidAggregateIdentity;
 use Gears\Event\Event;
+use Gears\Identity\UuidIdentity;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -29,7 +29,7 @@ class AbstractAggregateRootTest extends TestCase
         $event = $this->getMockBuilder(Event::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $aggregateIdentity = UuidAggregateIdentity::fromString('3247cb6e-e9c7-4f3a-9c6c-0dec26a0353f');
+        $aggregateIdentity = UuidIdentity::fromString('3247cb6e-e9c7-4f3a-9c6c-0dec26a0353f');
 
         $aggregateRoot = AbstractAggregateRootStub::instantiateWithEvent($aggregateIdentity, $event);
 

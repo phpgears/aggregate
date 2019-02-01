@@ -16,6 +16,7 @@ namespace Gears\Aggregate;
 use Gears\Event\Event;
 use Gears\Event\EventArrayCollection;
 use Gears\Event\EventCollection;
+use Gears\Identity\Identity;
 
 /**
  * Abstract aggregate root class.
@@ -23,45 +24,31 @@ use Gears\Event\EventCollection;
 abstract class AbstractAggregateRoot implements AggregateRoot
 {
     /**
-     * @var AggregateIdentity
+     * @var Identity
      */
     private $identity;
 
     /**
      * @var Event[]
      */
-    private $events = [];
+    private $recordedEvents = [];
 
     /**
      * AbstractAggregateRoot constructor.
      *
-     * @param AggregateIdentity $identity
+     * @param Identity $identity
      */
-    final protected function __construct(AggregateIdentity $identity)
+    final protected function __construct(Identity $identity)
     {
         $this->identity = $identity;
     }
 
     /**
-     * Get aggregate identity.
-     *
-     * @return AggregateIdentity
-     */
-    final public function getIdentity(): AggregateIdentity
-    {
-        return $this->identity;
-    }
-
-    /**
      * {@inheritdoc}
      */
-    final public function collectRecordedEvents(): EventCollection
+    final public function getIdentity(): Identity
     {
-        $events = new EventArrayCollection($this->events);
-
-        $this->events = [];
-
-        return $events;
+        return $this->identity;
     }
 
     /**
@@ -71,6 +58,34 @@ abstract class AbstractAggregateRoot implements AggregateRoot
      */
     final protected function recordEvent(Event $event): void
     {
-        $this->events[] = $event;
+        $this->recordedEvents[] = $event;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    final public function getRecordedEvents(): EventCollection
+    {
+        return new EventArrayCollection($this->recordedEvents);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    final public function clearRecordedEvents(): void
+    {
+        $this->recordedEvents = [];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    final public function collectRecordedEvents(): EventCollection
+    {
+        $events = new EventArrayCollection($this->recordedEvents);
+
+        $this->recordedEvents = [];
+
+        return $events;
     }
 }

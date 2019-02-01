@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace Gears\Aggregate\Tests\Stub;
 
 use Gears\Aggregate\AbstractAggregateRoot;
-use Gears\Aggregate\AggregateIdentity;
 use Gears\Event\Event;
+use Gears\Identity\Identity;
 
 /**
  * Abstract aggregate root stub class.
@@ -23,12 +23,12 @@ use Gears\Event\Event;
 class AbstractAggregateRootStub extends AbstractAggregateRoot
 {
     /**
-     * @param AggregateIdentity $identity
-     * @param Event             $event
+     * @param Identity $identity
+     * @param Event    $event
      *
      * @return self
      */
-    public static function instantiateWithEvent(AggregateIdentity $identity, Event $event): self
+    public static function instantiateWithEvent(Identity $identity, Event $event): self
     {
         $aggregateRoot = new self($identity);
 

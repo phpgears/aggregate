@@ -32,31 +32,7 @@ require './vendor/autoload.php';
 
 ### Aggregate identity
 
-By extending `Gears\Aggregate\AbstractAggregateIdentity` you can easily create your own aggregate identities
-
-```php
-use Gears\Aggregate\AbstractAggregateIdentity;
-
-class CustomAggregateIdentity extends AbstractAggregateIdentity
-{
-    public static function fromString(string $value)
-    {
-        // Check $value validity
-
-        return new static($value);
-    }
-}
-```
-
-Most widely used aggregate identities are UUID based, for that reason some UUID aggregate identity classes are provided for you to use or extend from
-
-* `Gears\Aggregate\UuidAggregateIdentity` Basic plain UUID aggregate identity
-* `Gears\Aggregate\ShortUuidAggregateIdentity` Shortened UUID aggregate identity. Requires [pascaldevink/shortuuid](https://github.com/pascaldevink/shortuuid)
-* `Gears\Aggregate\HashUuidAggregateIdentity` Hashed UUID aggregate identity. Requires [hashids/hashids](https://github.com/ivanakimov/hashids.php)
-
-Both ShortUuidAggregateIdentity and HashUuidAggregateIdentity allows you to recover original UUID
-
-If you want to expand on UUID aggregate identities head to [gears/identity](https://github.com/phpgears/identity)
+Aggregate identities are provided by [gears/identity](https://github.com/phpgears/identity), head over there to learn about them
 
 ### Aggregate root
 
@@ -64,10 +40,11 @@ Aggregate roots should implement `Gears\Aggregate\AggregateRoot` interface. You 
 
 ```php
 use Gears\Aggregate\AbstractAggregateRoot;
+use Gears\Identity\Identity
 
 class CustomAggregate extends AbstractAggregateRoot
 {
-    public static function instantiate(AggregateIdentity $identity): self
+    public static function instantiate(Identity $identity): self
     {
         return new self($identity);
     }
@@ -86,10 +63,11 @@ Aggregate roots can record [gears/event](https://github.com/phpgears/event) as o
 
 ```php
 use Gears\Aggregate\AbstractAggregateRoot;
+use Gears\Identity\Identity;
 
 class CustomAggregate extends AbstractAggregateRoot
 {
-    public static function instantiate(AggregateIdentity $identity): self
+    public static function instantiate(Identity $identity): self
     {
         return new self($identity);
     }
@@ -106,7 +84,7 @@ class CustomAggregate extends AbstractAggregateRoot
 This events could later be collected and sent to an event bus such as [gears/event](https://github.com/phpgears/event)
 
 ```php
-$customAggregate = new UuidAggregate(CustomAggregateIdentity::fromString('4c4316cb-b48b-44fb-a034-90d789966bac'));
+$customAggregate = new UuidAggregate(CustomIdentity::fromString('4c4316cb-b48b-44fb-a034-90d789966bac'));
 $customAggregate->doSomething();
 
 foreach ($customAggregate->collectRecordedEvents() as $event) {
