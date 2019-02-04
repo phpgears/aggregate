@@ -34,9 +34,29 @@ class AbstractAggregateRootTest extends TestCase
         $aggregateRoot = AbstractAggregateRootStub::instantiateWithEvent($aggregateIdentity, $event);
 
         $this->assertSame($aggregateIdentity, $aggregateRoot->getIdentity());
+    }
+
+    public function testRecordedEvents(): void
+    {
+        /** @var Event $event */
+        $event = $this->getMockBuilder(Event::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $aggregateIdentity = UuidIdentity::fromString('3247cb6e-e9c7-4f3a-9c6c-0dec26a0353f');
+
+        $aggregateRoot = AbstractAggregateRootStub::instantiateWithEvent($aggregateIdentity, $event);
+
+        $this->assertCount(1, $aggregateRoot->getRecordedEvents());
+        $aggregateRoot->clearRecordedEvents();
+        $this->assertCount(0, $aggregateRoot->getRecordedEvents());
+
+        $aggregateRoot = AbstractAggregateRootStub::instantiateWithEvent($aggregateIdentity, $event);
+
+        $this->assertCount(1, $aggregateRoot->getRecordedEvents());
         $recordedEvents = $aggregateRoot->collectRecordedEvents();
         $this->assertCount(0, $aggregateRoot->collectRecordedEvents());
         $this->assertCount(1, $recordedEvents);
+
         $this->assertEquals([$event], \iterator_to_array($recordedEvents));
     }
 }
