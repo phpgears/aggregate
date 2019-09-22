@@ -29,6 +29,6 @@ class AbstractEntityTest extends TestCase
         $entity = new class($identity) extends AbstractEntity {
         };
 
-        $this->assertSame($identity, $entity->getIdentity());
+        static::assertSame($identity, $entity->getIdentity());
     }
 }

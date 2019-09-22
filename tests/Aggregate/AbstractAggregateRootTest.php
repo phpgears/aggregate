@@ -33,7 +33,7 @@ class AbstractAggregateRootTest extends TestCase
 
         $aggregateRoot = AbstractAggregateRootStub::instantiateWithEvent($aggregateIdentity, $event);
 
-        $this->assertSame($aggregateIdentity, $aggregateRoot->getIdentity());
+        static::assertSame($aggregateIdentity, $aggregateRoot->getIdentity());
     }
 
     public function testRecordedEvents(): void
@@ -46,17 +46,17 @@ class AbstractAggregateRootTest extends TestCase
 
         $aggregateRoot = AbstractAggregateRootStub::instantiateWithEvent($aggregateIdentity, $event);
 
-        $this->assertCount(1, $aggregateRoot->getRecordedEvents());
+        static::assertCount(1, $aggregateRoot->getRecordedEvents());
         $aggregateRoot->clearRecordedEvents();
-        $this->assertCount(0, $aggregateRoot->getRecordedEvents());
+        static::assertCount(0, $aggregateRoot->getRecordedEvents());
 
         $aggregateRoot = AbstractAggregateRootStub::instantiateWithEvent($aggregateIdentity, $event);
 
-        $this->assertCount(1, $aggregateRoot->getRecordedEvents());
+        static::assertCount(1, $aggregateRoot->getRecordedEvents());
         $recordedEvents = $aggregateRoot->collectRecordedEvents();
-        $this->assertCount(0, $aggregateRoot->collectRecordedEvents());
-        $this->assertCount(1, $recordedEvents);
+        static::assertCount(0, $aggregateRoot->collectRecordedEvents());
+        static::assertCount(1, $recordedEvents);
 
-        $this->assertEquals([$event], \iterator_to_array($recordedEvents));
+        static::assertEquals([$event], \iterator_to_array($recordedEvents));
     }
 }
