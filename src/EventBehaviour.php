@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace Gears\Aggregate;
 
 use Gears\Event\Event;
-use Gears\Event\EventArrayCollection;
 use Gears\Event\EventCollection;
+use Gears\Event\EventIteratorCollection;
 
 /**
  * Recorded events trait.
@@ -23,9 +23,9 @@ use Gears\Event\EventCollection;
 trait EventBehaviour
 {
     /**
-     * @var Event[]
+     * @var \ArrayObject
      */
-    private $recordedEvents = [];
+    private $recordedEvents;
 
     /**
      * Record event.
@@ -34,7 +34,11 @@ trait EventBehaviour
      */
     final protected function recordEvent(Event $event): void
     {
-        $this->recordedEvents[] = $event;
+        if ($this->recordedEvents === null) {
+            $this->recordedEvents = new \ArrayObject();
+        }
+
+        $this->recordedEvents->append($event);
     }
 
     /**
@@ -42,7 +46,8 @@ trait EventBehaviour
      */
     final public function getRecordedEvents(): EventCollection
     {
-        return new EventArrayCollection($this->recordedEvents);
+        $recordedEvents = $this->recordedEvents ?? new \ArrayObject();
+        return new EventIteratorCollection($recordedEvents->getIterator());
     }
 
     /**
@@ -50,7 +55,7 @@ trait EventBehaviour
      */
     final public function clearRecordedEvents(): void
     {
-        $this->recordedEvents = [];
+        $this->recordedEvents = new \ArrayObject();
     }
 
     /**
@@ -58,9 +63,10 @@ trait EventBehaviour
      */
     final public function collectRecordedEvents(): EventCollection
     {
-        $events = new EventArrayCollection($this->recordedEvents);
+        $recordedEvents = $this->recordedEvents ?? new \ArrayObject();
+        $events = new EventIteratorCollection($recordedEvents->getIterator());
 
-        $this->recordedEvents = [];
+        $this->recordedEvents = new \ArrayObject();
 
         return $events;
     }
