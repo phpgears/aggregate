@@ -46,8 +46,9 @@ trait EventBehaviour
      */
     final public function getRecordedEvents(): EventCollection
     {
-        $recordedEvents = $this->recordedEvents ?? new \ArrayObject();
-        return new EventIteratorCollection($recordedEvents->getIterator());
+        return new EventIteratorCollection(
+            $this->recordedEvents !== null ? $this->recordedEvents->getIterator() : new \EmptyIterator()
+        );
     }
 
     /**
@@ -63,8 +64,9 @@ trait EventBehaviour
      */
     final public function collectRecordedEvents(): EventCollection
     {
-        $recordedEvents = $this->recordedEvents ?? new \ArrayObject();
-        $events = new EventIteratorCollection($recordedEvents->getIterator());
+        $events = new EventIteratorCollection(
+            $this->recordedEvents !== null ? $this->recordedEvents->getIterator() : new \EmptyIterator()
+        );
 
         $this->recordedEvents = new \ArrayObject();
 

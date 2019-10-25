@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Gears\Aggregate\Tests;
 
-use Gears\Aggregate\AbstractEntity;
+use Gears\Aggregate\Tests\Stub\AbstractEntityStub;
 use Gears\Identity\UuidIdentity;
 use PHPUnit\Framework\TestCase;
 
@@ -26,8 +26,7 @@ class AbstractEntityTest extends TestCase
     {
         $identity = UuidIdentity::fromString('30a447f7-72c0-4b43-a0ab-a22fb8ce651d');
 
-        $entity = new class($identity) extends AbstractEntity {
-        };
+        $entity = AbstractEntityStub::instantiate($identity);
 
         static::assertSame($identity, $entity->getIdentity());
     }

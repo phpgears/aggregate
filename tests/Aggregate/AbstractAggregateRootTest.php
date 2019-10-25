@@ -25,13 +25,9 @@ class AbstractAggregateRootTest extends TestCase
 {
     public function testApply(): void
     {
-        /** @var Event $event */
-        $event = $this->getMockBuilder(Event::class)
-            ->disableOriginalConstructor()
-            ->getMock();
         $aggregateIdentity = UuidIdentity::fromString('3247cb6e-e9c7-4f3a-9c6c-0dec26a0353f');
 
-        $aggregateRoot = AbstractAggregateRootStub::instantiateWithEvent($aggregateIdentity, $event);
+        $aggregateRoot = AbstractAggregateRootStub::instantiate($aggregateIdentity);
 
         static::assertSame($aggregateIdentity, $aggregateRoot->getIdentity());
     }
@@ -44,6 +40,10 @@ class AbstractAggregateRootTest extends TestCase
             ->getMock();
         $aggregateIdentity = UuidIdentity::fromString('3247cb6e-e9c7-4f3a-9c6c-0dec26a0353f');
 
+        $aggregateRoot = AbstractAggregateRootStub::instantiate($aggregateIdentity);
+
+        static::assertCount(0, $aggregateRoot->getRecordedEvents());
+
         $aggregateRoot = AbstractAggregateRootStub::instantiateWithEvent($aggregateIdentity, $event);
 
         static::assertCount(1, $aggregateRoot->getRecordedEvents());
@@ -54,8 +54,9 @@ class AbstractAggregateRootTest extends TestCase
 
         static::assertCount(1, $aggregateRoot->getRecordedEvents());
         $recordedEvents = $aggregateRoot->collectRecordedEvents();
-        static::assertCount(0, $aggregateRoot->collectRecordedEvents());
         static::assertCount(1, $recordedEvents);
+        static::assertCount(0, $aggregateRoot->getRecordedEvents());
+        static::assertCount(0, $aggregateRoot->collectRecordedEvents());
 
         static::assertEquals([$event], \iterator_to_array($recordedEvents));
     }

@@ -13,14 +13,13 @@ declare(strict_types=1);
 
 namespace Gears\Aggregate\Tests\Stub;
 
-use Gears\Aggregate\AbstractAggregateRoot;
-use Gears\Event\Event;
+use Gears\Aggregate\AbstractEntity;
 use Gears\Identity\Identity;
 
 /**
- * Abstract aggregate root stub class.
+ * Abstract entity stub class.
  */
-class AbstractAggregateRootStub extends AbstractAggregateRoot
+class AbstractEntityStub extends AbstractEntity
 {
     /**
      * @param Identity $identity
@@ -30,20 +29,5 @@ class AbstractAggregateRootStub extends AbstractAggregateRoot
     public static function instantiate(Identity $identity): self
     {
         return new self($identity);
-    }
-
-    /**
-     * @param Identity $identity
-     * @param Event    $event
-     *
-     * @return self
-     */
-    public static function instantiateWithEvent(Identity $identity, Event $event): self
-    {
-        $aggregateRoot = new self($identity);
-
-        $aggregateRoot->recordEvent($event);
-
-        return $aggregateRoot;
     }
 }

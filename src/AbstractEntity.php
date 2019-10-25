@@ -30,7 +30,7 @@ abstract class AbstractEntity implements Entity
      *
      * @param Identity $identity
      */
-    public function __construct(Identity $identity)
+    final protected function __construct(Identity $identity)
     {
         $this->identity = $identity;
     }
