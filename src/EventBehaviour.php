@@ -23,7 +23,7 @@ use Gears\Event\EventIteratorCollection;
 trait EventBehaviour
 {
     /**
-     * @var \ArrayObject
+     * @var \ArrayObject<string, Event>|null
      */
     private $recordedEvents;
 
