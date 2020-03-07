@@ -56,7 +56,7 @@ trait EventBehaviour
      */
     final public function clearRecordedEvents(): void
     {
-        $this->recordedEvents = new \ArrayObject();
+        $this->recordedEvents = null;
     }
 
     /**
