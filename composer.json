@@ -23,7 +23,7 @@
   "prefer-stable": true,
   "require": {
     "php": "^7.1",
-    "phpgears/event": "~0.3.3",
+    "phpgears/event": "dev-reflection-based",
     "phpgears/identity": "~0.2"
   },
   "require-dev": {
