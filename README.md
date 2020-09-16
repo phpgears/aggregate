@@ -40,7 +40,7 @@ Aggregate roots should implement `Gears\Aggregate\AggregateRoot` interface. You 
 
 ```php
 use Gears\Aggregate\AbstractAggregateRoot;
-use Gears\Identity\Identity
+use Gears\Identity\Identity;
 
 class CustomAggregate extends AbstractAggregateRoot
 {
@@ -81,10 +81,12 @@ class CustomAggregate extends AbstractAggregateRoot
 }
 ```
 
-This events could later be collected and sent to an event bus such as [gears/event](https://github.com/phpgears/event)
+These events could be collected afterwards and sent to an event bus such as [gears/event](https://github.com/phpgears/event)
 
 ```php
-$customAggregate = new UuidAggregate(CustomIdentity::fromString('4c4316cb-b48b-44fb-a034-90d789966bac'));
+$customAggregate = CustomAggregate::instantiate(
+    UuidIdentity::fromString('4c4316cb-b48b-44fb-a034-90d789966bac')
+);
 $customAggregate->doSomething();
 
 foreach ($customAggregate->collectRecordedEvents() as $event) {
