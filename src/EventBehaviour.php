@@ -68,7 +68,7 @@ trait EventBehaviour
             $this->recordedEvents !== null ? $this->recordedEvents->getIterator() : new \EmptyIterator()
         );
 
-        $this->recordedEvents = new \ArrayObject();
+        $this->recordedEvents = null;
 
         return $events;
     }
